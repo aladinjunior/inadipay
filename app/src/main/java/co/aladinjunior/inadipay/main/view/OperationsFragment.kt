@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.aladinjunior.inadipay.R
-import co.aladinjunior.inadipay.model.CostumerContainer
+import co.aladinjunior.inadipay.main.model.CostumerContainer
 
 class OperationsFragment : Fragment() {
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_operations, container, false)
     }
@@ -22,13 +24,42 @@ class OperationsFragment : Fragment() {
 
         val list = mutableListOf<CostumerContainer>()
 
-        list.add(CostumerContainer("Aladin", "R$250,00"))
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
+        list.add(
+            CostumerContainer("Aladin", "R$250,00"),
+        )
 
-        val adapter = Adapter(R.layout.container_costumer, list)
+
+        val adapter = MainAdapter(R.layout.container_costumer, list, requireContext())
 
         val rv = view.findViewById<RecyclerView>(R.id.main_rv)
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
+
+
 
     }
 }

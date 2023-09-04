@@ -3,6 +3,7 @@
     <string name="operations">Operações</string>
     <string name="_default">Inadimplência</string>
     <string name="costumer_active_wallet">Carteira Ativa</string>
-    <string name="customer_name">Nome do Cliente</string>
+    <string name="costumer_name">Nome do Cliente</string>
     <string name="costumer_bill">R$ 1000,00</string>
+    <string name="register_new_costumer">Cadastrar Cliente</string>
 </resources>

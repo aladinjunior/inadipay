@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:background="@drawable/container_costumer_background">
 
     <TextView
+        style="@style/TextViewStyleForm"
         android:id="@+id/main_text_costumer_name"
-        tools:text="@string/customer_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"/>
+        tools:text="@string/costumer_name"
+        android:textColor="@color/black" />
 
     <TextView
+        style="@style/TextViewStyleForm"
         android:id="@+id/main_text_costumer_bill"
         tools:text="@string/costumer_bill"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:textAlignment="textEnd"
-        android:textSize="20sp"
         android:textColor="@color/black"
-        android:textStyle="italic"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"/>
+        android:textStyle="italic" />
 
 
 

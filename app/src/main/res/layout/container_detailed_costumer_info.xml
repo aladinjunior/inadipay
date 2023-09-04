@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/container_costumer_background"
+    tools:context=".detailed.view.DetailedCostumerInfoActivity">
+
+
+    <TextView
+        android:layout_marginEnd="1dp"
+        android:id="@+id/detailed_text_label"
+        android:background="@drawable/container_costumer_background"
+        android:backgroundTint="@color/gray"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        style="@style/TextViewStyleFormDetailed"
+        tools:text="@string/costumer_name"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:id="@+id/detailed_text_response"
+        tools:text="@string/costumer_name"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        style="@style/TextViewStyleFormDetailed"
+        android:textSize="13sp"/>
+
+</LinearLayout>
