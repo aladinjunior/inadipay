@@ -6,4 +6,14 @@
     <string name="costumer_name">Nome do Cliente</string>
     <string name="costumer_bill">R$ 1000,00</string>
     <string name="register_new_costumer">Cadastrar Cliente</string>
+    <string name="firstname">Nome</string>
+    <string name="surname">Sobrenome</string>
+    <string name="cpf">CPF</string>
+    <string name="payment_date">Data de Pagamento</string>
+    <string name="amount_released">Valor a Liberar</string>
+    <string name="register">Cadastrar</string>
+    <string name="register_costumer">CADASTRAR CLIENTE</string>
+    <string name="this_field_cant_be_null">Esse campo não pode ser vazio</string>
+    <string name="invalid_cpf">CPF inválido</string>
+    <string name="any_field_can_be_null">Nenhum campo pode ser vazio</string>
 </resources>

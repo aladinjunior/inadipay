@@ -8,13 +8,13 @@
     android:background="@drawable/container_costumer_background">
 
     <TextView
-        style="@style/TextViewStyleForm"
+        style="@style/Theme.InadiPay.TextStyle"
         android:id="@+id/main_text_costumer_name"
         tools:text="@string/costumer_name"
         android:textColor="@color/black" />
 
     <TextView
-        style="@style/TextViewStyleForm"
+        style="@style/Theme.InadiPay.TextStyle"
         android:id="@+id/main_text_costumer_bill"
         tools:text="@string/costumer_bill"
         android:textAlignment="textEnd"

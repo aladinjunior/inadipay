@@ -16,7 +16,7 @@
         android:backgroundTint="@color/gray"
         android:textColor="@color/white"
         android:textStyle="bold"
-        style="@style/TextViewStyleFormDetailed"
+        style="@style/Theme.InadiPay.TextStyleDetailed"
         tools:text="@string/costumer_name"/>
 
     <View
@@ -29,7 +29,7 @@
         tools:text="@string/costumer_name"
         android:textColor="@color/black"
         android:textStyle="bold"
-        style="@style/TextViewStyleFormDetailed"
+        style="@style/Theme.InadiPay.TextStyleDetailed"
         android:textSize="13sp"/>
 
 </LinearLayout>
