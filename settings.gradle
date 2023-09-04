@@ -1,0 +1,2 @@
+rootProject.name = "InadiPay"
+include ':app'
