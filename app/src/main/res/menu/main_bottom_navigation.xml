@@ -9,7 +9,7 @@
         android:title="@string/_default"
         android:icon="@drawable/ic_baseline_money_off_24"/>
 
-    <item android:id="@+id/nav_actives"
+    <item android:id="@+id/nav_active_wallet"
         android:title="@string/costumer_active_wallet"
         android:icon="@drawable/ic_baseline_person_24"/>
 
