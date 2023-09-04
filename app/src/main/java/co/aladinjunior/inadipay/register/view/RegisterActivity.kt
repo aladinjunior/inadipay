@@ -23,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var cpf: TextInputEditText
     private lateinit var date: TextInputEditText
     private lateinit var amount: TextInputEditText
+    private lateinit var button: LoadingButton
 
     private lateinit var nameInputLayout: TextInputLayout
     private lateinit var surnameInputLayout: TextInputLayout
@@ -39,6 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         cpf = findViewById(R.id.register_edit_cpf)
         date = findViewById(R.id.register_edit_date)
         amount = findViewById(R.id.register_edit_amount_released)
+        button = findViewById(R.id.register_button)
 
         nameInputLayout = findViewById(R.id.register_input_name)
         surnameInputLayout = findViewById(R.id.register_input_surname)
@@ -47,24 +49,27 @@ class RegisterActivity : AppCompatActivity() {
         amountInputLayout = findViewById(R.id.register_input_amount_released)
         validateTextFields()
         cpf.addTextChangedListener(Mask.mask("###.###.###-##", cpf))
+
         date.addTextChangedListener(Mask.mask("##/##/####", date))
 
 
 
 
-
-        val button = findViewById<LoadingButton>(R.id.register_button)
+        button = findViewById(R.id.register_button)
         button.setOnClickListener {
             button.showProgress(true)
-
             if (isValid()){
-                if (!CPFUtil.validateCPF(cpf.text.toString()))
+                if (!CPFUtil.validateCPF(cpf.text.toString())){
+                    Handler(Looper.getMainLooper())
+                        .postDelayed({
+                            button.showProgress(false)
+                            cpfInputLayout.error = getString(R.string.invalid_cpf)
+                        }, 1000)
+                }
+                else Toast.makeText(this, "indo para proxima tela", Toast.LENGTH_SHORT).show()
 
-                Handler(Looper.getMainLooper())
-                    .postDelayed({
-                        button.showProgress(false)
-                        cpfInputLayout.error = getString(R.string.invalid_cpf)
-                    }, 2000)
+
+
 
 
             } else {
@@ -77,6 +82,23 @@ class RegisterActivity : AppCompatActivity() {
 
 
         }
+
+//    private val watcher = object : TextWatcher{
+//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//        }
+//
+//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            val text = s.toString()
+//            if (text.length < 10){
+//                dateInputLayout.error = "data invalida"
+//            }
+//        }
+//
+//        override fun afterTextChanged(s: Editable?) {
+//        }
+//
+//    }
+
 
     private fun isValid() : Boolean {
         return (name.text.toString().isNotEmpty()
@@ -118,6 +140,7 @@ class RegisterActivity : AppCompatActivity() {
             if(!hasFocus){
                 val text = date.text.toString().trim()
                 if(text.isEmpty()) dateInputLayout.error = getString(R.string.this_field_cant_be_null)
+                if(text.length < 10) dateInputLayout.error = "data invalida"
                 else dateInputLayout.error = null
 
             }
