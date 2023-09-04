@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_operations"
+        android:title="@string/operations"
+        android:icon="@drawable/ic_baseline_business_center_24"/>
+
+    <item android:id="@+id/nav_default"
+        android:title="@string/_default"
+        android:icon="@drawable/ic_baseline_money_off_24"/>
+
+    <item android:id="@+id/nav_actives"
+        android:title="@string/costumer_active_wallet"
+        android:icon="@drawable/ic_baseline_person_24"/>
+
+
+</menu>
