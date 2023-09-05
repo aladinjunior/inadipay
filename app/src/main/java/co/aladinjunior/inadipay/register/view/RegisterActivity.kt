@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.util.CPFUtil
+import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.Mask
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -49,58 +50,50 @@ class RegisterActivity : AppCompatActivity() {
         amountInputLayout = findViewById(R.id.register_input_amount_released)
         validateTextFields()
         cpf.addTextChangedListener(Mask.mask("###.###.###-##", cpf))
-
         date.addTextChangedListener(Mask.mask("##/##/####", date))
-
 
 
 
         button = findViewById(R.id.register_button)
         button.setOnClickListener {
-            button.showProgress(true)
-            if (isValid()){
-                if (!CPFUtil.validateCPF(cpf.text.toString())){
-                    Handler(Looper.getMainLooper())
-                        .postDelayed({
-                            button.showProgress(false)
-                            cpfInputLayout.error = getString(R.string.invalid_cpf)
-                        }, 1000)
-                }
-                else Toast.makeText(this, "indo para proxima tela", Toast.LENGTH_SHORT).show()
+            validate()
+
+        }
 
 
+    }
 
 
+    private fun validate() {
+        button.showProgress(true)
+        if (formIsNotEmpty()) {
+            if (!CPFUtil.validateCPF(cpf.text.toString())) {
+                Handler(Looper.getMainLooper())
+                    .postDelayed({
+                        button.showProgress(false)
+                        cpfInputLayout.error = getString(R.string.invalid_cpf)
 
-            } else {
-                button.showProgress(false)
-                Toast.makeText(this, getString(R.string.any_field_can_be_null), Toast.LENGTH_SHORT).show()
-
-
+                    }, 1000)
             }
+            if (!DateUtil.validateDate(date.text.toString())) {
+                Handler(Looper.getMainLooper())
+                    .postDelayed({
+                        button.showProgress(false)
+                        dateInputLayout.error = getString(R.string.invalid_date)
+                    }, 1000)
+            } else Toast.makeText(this, "indo para proxima tela", Toast.LENGTH_SHORT).show()
+
+
+        } else {
+            button.showProgress(false)
+            Toast.makeText(this, getString(R.string.any_field_can_be_null), Toast.LENGTH_SHORT)
+                .show()
+
         }
+    }
 
 
-        }
-
-//    private val watcher = object : TextWatcher{
-//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//        }
-//
-//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            val text = s.toString()
-//            if (text.length < 10){
-//                dateInputLayout.error = "data invalida"
-//            }
-//        }
-//
-//        override fun afterTextChanged(s: Editable?) {
-//        }
-//
-//    }
-
-
-    private fun isValid() : Boolean {
+    private fun formIsNotEmpty(): Boolean {
         return (name.text.toString().isNotEmpty()
                 && surname.text.toString().isNotEmpty()
                 && cpf.text.toString().isNotEmpty()
@@ -109,47 +102,51 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-
-    private fun validateTextFields(){
+    private fun validateTextFields() {
         name.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 val text = name.text.toString().trim()
-                if(text.isEmpty()) nameInputLayout.error = getString(R.string.this_field_cant_be_null)
+                if (text.isEmpty()) nameInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
                 else nameInputLayout.error = null
 
             }
         }
 
         surname.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 val text = surname.text.toString().trim()
-                if(text.isEmpty()) surnameInputLayout.error = getString(R.string.this_field_cant_be_null)
+                if (text.isEmpty()) surnameInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
                 else surnameInputLayout.error = null
 
             }
         }
         cpf.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 val text = cpf.text.toString().trim()
-                if(text.isEmpty()) cpfInputLayout.error = getString(R.string.this_field_cant_be_null)
+                if (text.isEmpty()) cpfInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
                 else cpfInputLayout.error = null
             }
         }
 
         date.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 val text = date.text.toString().trim()
-                if(text.isEmpty()) dateInputLayout.error = getString(R.string.this_field_cant_be_null)
-                if(text.length < 10) dateInputLayout.error = "data invalida"
+                if (text.isEmpty()) dateInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
+                if (text.length < 10) dateInputLayout.error = getString(R.string.invalid_date)
                 else dateInputLayout.error = null
 
             }
         }
 
         amount.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 val text = amount.text.toString().trim()
-                if(text.isEmpty()) amountInputLayout.error = getString(R.string.this_field_cant_be_null)
+                if (text.isEmpty()) amountInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
                 amountInputLayout.error = null
 
             }
@@ -158,7 +155,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    }
+}
 
 
 

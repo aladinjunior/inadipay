@@ -16,4 +16,5 @@
     <string name="this_field_cant_be_null">Esse campo não pode ser vazio</string>
     <string name="invalid_cpf">CPF inválido</string>
     <string name="any_field_can_be_null">Nenhum campo pode ser vazio</string>
+    <string name="invalid_date">Data inválida</string>
 </resources>
