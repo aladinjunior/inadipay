@@ -18,5 +18,26 @@ class DateUtil {
                 return false
             }
         }
+
+        fun calculateDelayedDays(paymentDay: String): Int {
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+
+            try {
+                val currentDate = Date()
+                val paymentDayDate = sdf.parse(paymentDay)
+                val differenceInMilis = currentDate.time - paymentDayDate.time
+
+
+                val delayedDays = (differenceInMilis / (1000 * 60 * 60 * 24)).toInt()
+
+                return delayedDays
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return 0
+            }
+        }
+
+
+
     }
 }

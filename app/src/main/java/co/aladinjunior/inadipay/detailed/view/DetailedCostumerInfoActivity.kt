@@ -7,38 +7,61 @@ import androidx.recyclerview.widget.RecyclerView
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.detailed.model.DetailedCostumerInfoContainer
 import co.aladinjunior.inadipay.main.view.DetailedAdapter
+import co.aladinjunior.inadipay.util.App
+import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.Labels
+import java.lang.NullPointerException
 
 
 class DetailedCostumerInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailed_costumer_info)
+
+        val id = intent?.extras?.getInt("id")
         val list = mutableListOf<DetailedCostumerInfoContainer>()
 
-        list.add(
-            DetailedCostumerInfoContainer(Labels.NAME, "Aladin Bento Ferreira Júnior")
-        )
 
-        list.add(
-            DetailedCostumerInfoContainer(Labels.CPF, "142.161.214-38")
-        )
+        Thread {
 
-        list.add(
-            DetailedCostumerInfoContainer(Labels.CELLPHONE, "(81) 984349138")
-        )
+            val app = application as App
+            val dao = app.db.costumerDao()
 
-        list.add(
-            DetailedCostumerInfoContainer(Labels.PAYMENT_DAY, "25/08/2023")
-        )
+            if(id != null) {
+                val customer = dao.getCustomerInfo(id)
+                val name = "${customer.firstName} ${customer.secondName}"
 
-        list.add(
-            DetailedCostumerInfoContainer(Labels.DELAYED_DAYS, "5")
-        )
+                val delayedDays = DateUtil.calculateDelayedDays(customer.paymentDay).toString()
 
-        list.add(
-            DetailedCostumerInfoContainer(Labels.AMOUNT_RELEASED, "1000")
-        )
+                runOnUiThread {
+                    list.clear()
+
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.NAME, name)
+                    )
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.CPF, customer.cpf)
+                    )
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.CELLPHONE, "81-98439138")
+                    )
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.PAYMENT_DAY, customer.paymentDay)
+                    )
+
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.DELAYED_DAYS, delayedDays)
+                    )
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.AMOUNT_RELEASED, customer.amountReleased)
+                    )
+                }
+            }
+
+
+        }.start()
+
+
 
 
 
@@ -48,5 +71,8 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
         rv.adapter = adapter
 
 
+
+
     }
+
 }

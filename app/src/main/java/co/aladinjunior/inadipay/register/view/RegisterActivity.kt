@@ -41,6 +41,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dateInputLayout: TextInputLayout
     private lateinit var amountInputLayout: TextInputLayout
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -61,11 +64,8 @@ class RegisterActivity : AppCompatActivity() {
         cpf.addTextChangedListener(Mask.mask("###.###.###-##", cpf))
         date.addTextChangedListener(Mask.mask("##/##/####", date))
 
-        val costumer = Costumer(firstName = name.text.toString(),
-            secondName = surname.text.toString(),
-            cpf = cpf.text.toString(),
-            paymentDay = date.text.toString(),
-            amountReleased = amount.text.toString())
+
+
 
 
 
@@ -75,18 +75,21 @@ class RegisterActivity : AppCompatActivity() {
 
             validate()
 
+            val costumer = Costumer(firstName = name.text.toString(),
+                secondName = surname.text.toString(),
+                cpf = cpf.text.toString(),
+                paymentDay = date.text.toString(),
+                amountReleased = amount.text.toString())
 
+            Thread{
+                val app = application as App
+                val dao = app.db.costumerDao()
+                dao.insert(costumer)
+                runOnUiThread {
+                    Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
+                }
+            }.start()
 
-
-
-//            Thread{
-//                val app = application as App
-//                val dao = app.db.costumerDao()
-//                dao.insert(costumer)
-//                runOnUiThread {
-//                    Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
-//                }
-//            }.start()
 
 
 
@@ -108,12 +111,10 @@ class RegisterActivity : AppCompatActivity() {
                     }, 1000)
             }
 
-            //aqui funciona
-            val i = Intent(this, MainActivity::class.java)
-                .putExtra("firstName", name.text.toString())
-                .putExtra("amount", amount.text.toString())
-            startActivity(i)
 
+
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
 
 
 
