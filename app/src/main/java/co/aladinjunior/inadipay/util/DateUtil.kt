@@ -10,10 +10,13 @@ class DateUtil {
             try {
                 val sdf = SimpleDateFormat(format)
                 sdf.isLenient = false
-                val date = sdf.parse(strDate)
-                val today = Date()
+                val parsedDate = sdf.parse(strDate)
+                val calendar = Calendar.getInstance()
+                calendar.time = parsedDate
+                val month = calendar.get(Calendar.MONTH) + 1
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                return month in 1..12 && day in 1..31
 
-                return date.after(today)
             } catch (e: Exception) {
                 return false
             }

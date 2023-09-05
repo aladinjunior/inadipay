@@ -10,25 +10,34 @@ import co.aladinjunior.inadipay.data.db.entities.Costumer
 @Database(entities = [Costumer::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun costumerDao() : CostumerDao
+    abstract fun costumerDao(): CostumerDao
 
-    companion object{
+    companion object {
         private var INSTANCE: AppDatabase? = null
 
-         fun getDb(context: Context) : AppDatabase{
-           return if(INSTANCE == null){
-               synchronized(this){
-                   INSTANCE = Room.databaseBuilder(
-                       context.applicationContext,
-                       AppDatabase::class.java,
-                       "inadipay"
-                   ).build()
-               }
-               INSTANCE as AppDatabase
+        fun getDb(context: Context): AppDatabase {
+            return if (INSTANCE == null) {
+                synchronized(this) {
+                    INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "inadipay"
+                    ).build()
+                }
+                INSTANCE as AppDatabase
             } else {
-               INSTANCE as AppDatabase
+                INSTANCE as AppDatabase
             }
 
+        }
+
+        fun deleteDatabase(context: Context) {
+            INSTANCE?.close()
+            val databaseFile = context.getDatabasePath("inadipay")
+            if (databaseFile.exists()) {
+                context.deleteDatabase("inadipay")
+
+            }
         }
     }
 }

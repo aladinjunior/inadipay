@@ -72,23 +72,52 @@ class RegisterActivity : AppCompatActivity() {
 
         button = findViewById(R.id.register_button)
         button.setOnClickListener {
+            button.showProgress(true)
 
-            validate()
+            if (formIsNotEmpty()){
+                if (!CPFUtil.validateCPF(cpf.text.toString())){
+                    Handler(Looper.getMainLooper())
+                        .postDelayed({
+                            cpfInputLayout.error = getString(R.string.invalid_cpf)
+                            button.showProgress(false)
+                        }, 1000)
 
-            val costumer = Costumer(firstName = name.text.toString(),
-                secondName = surname.text.toString(),
-                cpf = cpf.text.toString(),
-                paymentDay = date.text.toString(),
-                amountReleased = amount.text.toString())
+                } else if(!DateUtil.validateDate(date.text.toString())){
+                    dateInputLayout.error = getString(R.string.invalid_date)
+                    button.showProgress(false)
+                } else {
+                    val costumer = Costumer(firstName = name.text.toString(),
+                        secondName = surname.text.toString(),
+                        cpf = cpf.text.toString(),
+                        paymentDay = date.text.toString(),
+                        amountReleased = amount.text.toString())
 
-            Thread{
-                val app = application as App
-                val dao = app.db.costumerDao()
-                dao.insert(costumer)
-                runOnUiThread {
-                    Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
+                    Thread{
+                        val app = application as App
+                        val dao = app.db.costumerDao()
+                        dao.insert(costumer)
+                        runOnUiThread {
+                            Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
+                            button.showProgress(false)
+                        }
+                    }.start()
+
+                    val i = Intent(this, MainActivity::class.java)
+                    startActivity(i)
+
                 }
-            }.start()
+
+            } else {
+                Handler(Looper.getMainLooper())
+                    .postDelayed({
+                        Toast.makeText(this, getString(R.string.any_field_can_be_null), Toast.LENGTH_SHORT).show()
+                        button.showProgress(false)
+                    }, 1000)
+
+
+            }
+
+
 
 
 
@@ -99,31 +128,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    private fun validate() {
-        button.showProgress(true)
-        if (formIsNotEmpty()) {
-            if (!CPFUtil.validateCPF(cpf.text.toString())) {
-                Handler(Looper.getMainLooper())
-                    .postDelayed({
-                        button.showProgress(false)
-                        cpfInputLayout.error = getString(R.string.invalid_cpf)
+    private fun fieldNotNull() {
 
-                    }, 1000)
-            }
-
-
-
-            val i = Intent(this, MainActivity::class.java)
-            startActivity(i)
-            finish()
-
-
-
-
-
-            }
-
-        }
+    }
 
     private fun formIsNotEmpty(): Boolean {
         return (name.text.toString().isNotEmpty()
@@ -159,6 +166,7 @@ class RegisterActivity : AppCompatActivity() {
                 val text = cpf.text.toString().trim()
                 if (text.isEmpty()) cpfInputLayout.error =
                     getString(R.string.this_field_cant_be_null)
+                if (text.length < 14) cpfInputLayout.error = getString(R.string.invalid_cpf)
                 else cpfInputLayout.error = null
             }
         }
