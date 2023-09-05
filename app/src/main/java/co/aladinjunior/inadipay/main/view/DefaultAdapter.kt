@@ -37,10 +37,19 @@ class DefaultAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(container: Costumer){
-            itemView.findViewById<TextView>(R.id.main_text_costumer_name).text = container.firstName
-            itemView.findViewById<TextView>(R.id.main_text_costumer_bill).text = container.amountReleased
+            val costumerName = itemView.findViewById<TextView>(R.id.main_text_costumer_name)
+            costumerName.setTextColor(context.resources.getColor(R.color.red))
+            costumerName.text = container.firstName
+            val costumerBill = itemView.findViewById<TextView>(R.id.main_text_costumer_bill)
+            costumerBill.setTextColor(context.resources.getColor(R.color.red))
+            costumerBill.text = container.amountReleased
             val costumerContainer = itemView as FrameLayout
-
+            costumerContainer.setBackgroundResource(R.drawable.container_costumer_default_background)
+            costumerContainer.setOnClickListener {
+                val i = Intent(context, DetailedCostumerInfoActivity::class.java)
+                    .putExtra("id", container.id)
+                context.startActivity(i)
+            }
 
         }
 
