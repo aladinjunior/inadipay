@@ -20,7 +20,7 @@ import co.aladinjunior.inadipay.util.OnLongClickListener
 class MainAdapter(@LayoutRes private val layoutId: Int,
                   private val containerList: List<Costumer>,
                   private val context: Context,
-                  private val listener: OnLongClickListener) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+                  private val listener: OnLongClickListener = OperationsFragment()) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)

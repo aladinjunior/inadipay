@@ -22,5 +22,8 @@ interface CostumerDao {
     @Query("SELECT id, secondName, firstName, cpf, paymentDay, amountReleased FROM Costumer WHERE id = :id")
     fun getCustomerInfo(id: Int) : Costumer
 
+    @Query("SELECT * FROM Costumer WHERE strftime('%d-%m-%Y', 'now') > paymentDay")
+    fun getAllDefaults(): List<Costumer>
+
 
 }
