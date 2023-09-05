@@ -1,5 +1,6 @@
 package co.aladinjunior.inadipay.register.view
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import co.aladinjunior.inadipay.R
+import co.aladinjunior.inadipay.data.db.AppDatabase
+import co.aladinjunior.inadipay.data.db.entities.Costumer
+import co.aladinjunior.inadipay.util.App
 import co.aladinjunior.inadipay.util.CPFUtil
 import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.Mask
@@ -54,9 +58,27 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
+
         button = findViewById(R.id.register_button)
         button.setOnClickListener {
             validate()
+
+            val costumer = Costumer(firstName = name.text.toString(),
+            secondName = surname.text.toString(),
+            cpf = cpf.text.toString(),
+            paymentDay = date.text.toString(),
+            amountReleased = amount.text.toString())
+
+            Thread{
+                val app = application as App
+                val dao = app.db.costumerDao()
+                dao.insert(costumer)
+                runOnUiThread {
+                    Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
+                }
+            }.start()
+
+
 
         }
 
