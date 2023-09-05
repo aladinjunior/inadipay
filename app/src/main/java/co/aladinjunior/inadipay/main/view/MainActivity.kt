@@ -13,7 +13,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val firstName = intent?.extras?.getString("firstName")
+        val amount = intent?.extras?.getString("amount")
+        val bundle = Bundle()
+        bundle.putString("firstName", firstName)
+        bundle.putString("amount", amount)
         val navController = findNavController(R.id.nav_host_fragment_container)
+        navController.navigate(R.id.nav_operations, bundle)
+
         findViewById<BottomNavigationView>(R.id.main_bottom_navigation).setupWithNavController(navController)
 
 

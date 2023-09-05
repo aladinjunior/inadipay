@@ -12,9 +12,20 @@ import co.aladinjunior.inadipay.main.model.CostumerContainer
 
 class OperationsFragment : Fragment() {
 
+    val list = mutableListOf<CostumerContainer>()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_operations, container, false)
+        val view = inflater.inflate(R.layout.fragment_operations, container, false)
+
+        val name = requireArguments().getString("firstName")
+        val amount = requireArguments().getString("amount")
+
+
+        list.add(
+            CostumerContainer(name ?: "Usuario Padrão", amount ?: "Valor Padrão"))
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,35 +33,12 @@ class OperationsFragment : Fragment() {
 
 
 
-        val list = mutableListOf<CostumerContainer>()
 
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
-        list.add(
-            CostumerContainer("Aladin", "R$250,00"),
-        )
+
+
+
+
+
 
 
         val adapter = MainAdapter(R.layout.container_costumer, list, requireContext())

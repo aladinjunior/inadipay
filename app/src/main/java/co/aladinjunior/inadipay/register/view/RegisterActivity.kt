@@ -1,6 +1,7 @@
 package co.aladinjunior.inadipay.register.view
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,9 +11,13 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.AppDatabase
 import co.aladinjunior.inadipay.data.db.entities.Costumer
+import co.aladinjunior.inadipay.main.view.MainActivity
+import co.aladinjunior.inadipay.main.view.OperationsFragment
 import co.aladinjunior.inadipay.util.App
 import co.aladinjunior.inadipay.util.CPFUtil
 import co.aladinjunior.inadipay.util.DateUtil
@@ -56,27 +61,32 @@ class RegisterActivity : AppCompatActivity() {
         cpf.addTextChangedListener(Mask.mask("###.###.###-##", cpf))
         date.addTextChangedListener(Mask.mask("##/##/####", date))
 
-
-
-
-        button = findViewById(R.id.register_button)
-        button.setOnClickListener {
-            validate()
-
-            val costumer = Costumer(firstName = name.text.toString(),
+        val costumer = Costumer(firstName = name.text.toString(),
             secondName = surname.text.toString(),
             cpf = cpf.text.toString(),
             paymentDay = date.text.toString(),
             amountReleased = amount.text.toString())
 
-            Thread{
-                val app = application as App
-                val dao = app.db.costumerDao()
-                dao.insert(costumer)
-                runOnUiThread {
-                    Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
-                }
-            }.start()
+
+
+
+        button = findViewById(R.id.register_button)
+        button.setOnClickListener {
+
+            validate()
+
+
+
+
+
+//            Thread{
+//                val app = application as App
+//                val dao = app.db.costumerDao()
+//                dao.insert(costumer)
+//                runOnUiThread {
+//                    Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
+//                }
+//            }.start()
 
 
 
@@ -97,23 +107,21 @@ class RegisterActivity : AppCompatActivity() {
 
                     }, 1000)
             }
-            if (!DateUtil.validateDate(date.text.toString())) {
-                Handler(Looper.getMainLooper())
-                    .postDelayed({
-                        button.showProgress(false)
-                        dateInputLayout.error = getString(R.string.invalid_date)
-                    }, 1000)
-            } else Toast.makeText(this, "indo para proxima tela", Toast.LENGTH_SHORT).show()
+
+            //aqui funciona
+            val i = Intent(this, MainActivity::class.java)
+                .putExtra("firstName", name.text.toString())
+                .putExtra("amount", amount.text.toString())
+            startActivity(i)
 
 
-        } else {
-            button.showProgress(false)
-            Toast.makeText(this, getString(R.string.any_field_can_be_null), Toast.LENGTH_SHORT)
-                .show()
+
+
+
+
+            }
 
         }
-    }
-
 
     private fun formIsNotEmpty(): Boolean {
         return (name.text.toString().isNotEmpty()
@@ -177,7 +185,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-}
+    }
+
+
+
 
 
 

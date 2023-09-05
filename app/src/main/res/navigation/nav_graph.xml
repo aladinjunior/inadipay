@@ -5,7 +5,13 @@
     app:startDestination="@id/nav_operations">
 
     <fragment android:id="@+id/nav_operations"
-        android:name="co.aladinjunior.inadipay.main.view.OperationsFragment"/>
+        android:name="co.aladinjunior.inadipay.main.view.OperationsFragment">
+        <argument android:name="firstName"
+            app:argType="string"/>
+        <argument android:name="amount"
+            app:argType="string"/>
+
+    </fragment>
 
     <fragment android:id="@+id/nav_default"
         android:name="co.aladinjunior.inadipay.main.view.DefaultFragment"/>
