@@ -1,5 +1,6 @@
 package co.aladinjunior.inadipay.util
 
+import co.aladinjunior.inadipay.data.db.entities.Costumer
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -69,7 +70,18 @@ class DateUtil {
             return  sdf.format(Date())
         }
 
+        fun getMonthName(customer: Costumer) : String {
+            val splitDate = customer.paymentDay.split("/")
+            val month = splitDate[1].toInt()
+            val months = listOf(
+                "Jan", "Fev", "Mar", "Abr",
+                "Mai", "Jun", "Jul", "Ago",
+                "Set", "Out", "Nov", "Dez"
+            )
 
+            val monthName = months[month - 1]
+            return monthName
+        }
 
     }
 }

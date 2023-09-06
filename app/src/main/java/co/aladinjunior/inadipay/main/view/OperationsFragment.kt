@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,7 +56,7 @@ class OperationsFragment : Fragment(), OnLongClickListener {
 
         }.start()
 
-        view.findViewById<Button>(R.id.main_button_register).setOnClickListener {
+        view.findViewById<TextView>(R.id.register).setOnClickListener {
             val i = Intent(requireContext(), RegisterActivity::class.java)
             startActivity(i)
         }
