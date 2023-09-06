@@ -18,4 +18,7 @@
     <string name="any_field_can_be_null">Nenhum campo pode ser vazio</string>
     <string name="invalid_date">Data inválida</string>
     <string name="delete_message">Deseja excluir o registro?</string>
+    <string name="phone">Celular</string>
+    <string name="next">Avançar</string>
+    <string name="installment">Parcelas</string>
 </resources>

@@ -31,15 +31,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var name: TextInputEditText
     private lateinit var surname: TextInputEditText
     private lateinit var cpf: TextInputEditText
-    private lateinit var date: TextInputEditText
-    private lateinit var amount: TextInputEditText
+    private lateinit var phone: TextInputEditText
+
     private lateinit var button: LoadingButton
 
     private lateinit var nameInputLayout: TextInputLayout
     private lateinit var surnameInputLayout: TextInputLayout
     private lateinit var cpfInputLayout: TextInputLayout
-    private lateinit var dateInputLayout: TextInputLayout
-    private lateinit var amountInputLayout: TextInputLayout
+    private lateinit var phoneInputLayout: TextInputLayout
+
 
 
 
@@ -51,18 +51,18 @@ class RegisterActivity : AppCompatActivity() {
         name = findViewById(R.id.register_edit_name)
         surname = findViewById(R.id.register_edit_surname)
         cpf = findViewById(R.id.register_edit_cpf)
-        date = findViewById(R.id.register_edit_date)
-        amount = findViewById(R.id.register_edit_amount_released)
+        phone = findViewById(R.id.register_edit_phone)
+
         button = findViewById(R.id.register_button)
 
         nameInputLayout = findViewById(R.id.register_input_name)
         surnameInputLayout = findViewById(R.id.register_input_surname)
         cpfInputLayout = findViewById(R.id.register_input_cpf)
-        dateInputLayout = findViewById(R.id.register_input_date)
-        amountInputLayout = findViewById(R.id.register_input_amount_released)
+        phoneInputLayout = findViewById(R.id.register_input_phone)
+
         validateTextFields()
         cpf.addTextChangedListener(Mask.mask("###.###.###-##", cpf))
-        date.addTextChangedListener(Mask.mask("##/##/####", date))
+
 
 
 
@@ -82,27 +82,12 @@ class RegisterActivity : AppCompatActivity() {
                             button.showProgress(false)
                         }, 1000)
 
-                } else if(!DateUtil.validateDate(date.text.toString())){
-                    dateInputLayout.error = getString(R.string.invalid_date)
-                    button.showProgress(false)
-                } else {
-                    val costumer = Costumer(firstName = name.text.toString(),
-                        secondName = surname.text.toString(),
-                        cpf = cpf.text.toString(),
-                        paymentDay = date.text.toString(),
-                        amountReleased = amount.text.toString())
+                }  else {
 
-                    Thread{
-                        val app = application as App
-                        val dao = app.db.costumerDao()
-                        dao.insert(costumer)
-                        runOnUiThread {
-                            Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
-                            button.showProgress(false)
-                        }
-                    }.start()
-
-                    val i = Intent(this, MainActivity::class.java)
+                    val i = Intent(this, RegisterNextActivity::class.java)
+                        .putExtra("name", name.text.toString())
+                        .putExtra("surname", surname.text.toString())
+                        .putExtra("cpf", cpf.text.toString())
                     startActivity(i)
 
                 }
@@ -120,24 +105,19 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
-
-
         }
 
 
     }
 
 
-    private fun fieldNotNull() {
 
-    }
 
     private fun formIsNotEmpty(): Boolean {
         return (name.text.toString().isNotEmpty()
                 && surname.text.toString().isNotEmpty()
                 && cpf.text.toString().isNotEmpty()
-                && date.text.toString().isNotEmpty()
-                && amount.text.toString().isNotEmpty())
+                && phone.text.toString().isNotEmpty())
     }
 
 
@@ -171,26 +151,18 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        date.setOnFocusChangeListener { v, hasFocus ->
+        phone.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                val text = date.text.toString().trim()
-                if (text.isEmpty()) dateInputLayout.error =
+                val text = phone.text.toString().trim()
+                if (text.isEmpty()) phoneInputLayout.error =
                     getString(R.string.this_field_cant_be_null)
-                if (text.length < 10) dateInputLayout.error = getString(R.string.invalid_date)
-                else dateInputLayout.error = null
+                if (text.length < 11) phoneInputLayout.error = getString(R.string.invalid_date)
+                else phoneInputLayout.error = null
 
             }
         }
 
-        amount.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val text = amount.text.toString().trim()
-                if (text.isEmpty()) amountInputLayout.error =
-                    getString(R.string.this_field_cant_be_null)
-                amountInputLayout.error = null
 
-            }
-        }
 
     }
 

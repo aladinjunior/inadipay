@@ -65,33 +65,22 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Theme.InadiPay.TextInputLayoutStyle"
-        android:id="@+id/register_input_date"
+        android:id="@+id/register_input_phone"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_edit_date"
+            android:id="@+id/register_edit_phone"
             style="@style/Theme.InadiPay.EditTextStyle"
-            android:hint="@string/payment_date"
-            android:inputType="date"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Theme.InadiPay.TextInputLayoutStyle"
-        android:id="@+id/register_input_amount_released"
-        app:hintEnabled="false">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_edit_amount_released"
-            style="@style/Theme.InadiPay.EditTextStyle"
-            android:hint="@string/amount_released"
+            android:maxLength="11"
+            android:hint="@string/phone"
             android:inputType="number"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <co.aladinjunior.inadipay.register.view.LoadingButton
         android:id="@+id/register_button"
-        app:text="@string/register"
+        app:text="@string/next"
         android:backgroundTint="@color/red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
