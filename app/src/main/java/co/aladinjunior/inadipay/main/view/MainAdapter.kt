@@ -6,24 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.entities.Costumer
-import co.aladinjunior.inadipay.detailed.model.DetailedCostumerInfoContainer
 import co.aladinjunior.inadipay.detailed.view.DetailedCostumerInfoActivity
-import co.aladinjunior.inadipay.main.model.CostumerContainer
+import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.OnLongClickListener
 
-class MainAdapter(@LayoutRes private val layoutId: Int,
-                  private val containerList: List<Costumer>,
+
+class MainAdapter(private val containerList: List<Costumer>,
                   private val context: Context,
-                  private val listener: OnLongClickListener = OperationsFragment()) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+                  private val listener: OnLongClickListener) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.container_costumer, parent, false)
         return ViewHolder(view)
     }
 
@@ -37,17 +35,26 @@ class MainAdapter(@LayoutRes private val layoutId: Int,
     }
 
      inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-         fun bind(container: Costumer){
-             itemView.findViewById<TextView>(R.id.main_text_costumer_name).text = container.firstName
-             itemView.findViewById<TextView>(R.id.main_text_costumer_bill).text = container.amountReleased
+         fun bind(customer: Costumer){
+             val strDate = DateUtil.getCurrentDate()
+             val currentDate = DateUtil.toDate(strDate)
+             val paymentDate = DateUtil.toDate(customer.paymentDay)
+             itemView.findViewById<TextView>(R.id.main_text_costumer_name).text = customer.firstName
+             itemView.findViewById<TextView>(R.id.main_text_costumer_bill).text = customer.amountReleased
+             val notifier = itemView.findViewById<ProgressBar>(R.id.main_button_notifier)
              val costumerContainer = itemView as FrameLayout
+             if (paymentDate == currentDate){
+                 notifier.visibility = View.VISIBLE
+             } else {
+                 notifier.visibility = View.GONE
+             }
              costumerContainer.setOnLongClickListener {
-                 listener.onLongClick(adapterPosition, container)
+                 listener.onLongClick(adapterPosition, customer, notifier)
                  true
              }
              costumerContainer.setOnClickListener {
                  val i = Intent(context, DetailedCostumerInfoActivity::class.java)
-                     .putExtra("id", container.id)
+                     .putExtra("id", customer.id)
                  context.startActivity(i)
              }
 

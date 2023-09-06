@@ -64,6 +64,11 @@ class DateUtil {
             }
         }
 
+        fun getCurrentDate(format: String ="dd/MM/yyyy") : String{
+            val sdf = SimpleDateFormat(format)
+            return  sdf.format(Date())
+        }
+
 
 
     }

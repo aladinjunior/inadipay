@@ -19,11 +19,11 @@ interface CostumerDao {
     @Query("SELECT id, secondName, firstName, cpf, paymentDay, amountReleased, cellPhone FROM Costumer WHERE id = :id")
     fun getCustomerInfo(id: Int) : Costumer
 
-    @Query("SELECT * FROM Costumer WHERE strftime('%d-%m-%Y', 'now') > paymentDay")
+    @Query("SELECT * FROM Costumer WHERE strftime('%Y-%m-%d', 'now') > strftime('%Y-%m-%d', substr(paymentDay, 7, 4) || '-' || substr(paymentDay, 4, 2) || '-' || substr(paymentDay, 1, 2))")
     fun getAllDefaults(): List<Costumer>
 
     @Query("UPDATE Costumer SET paymentDay = :updatedDate WHERE id = :id")
-    fun updateDateWithOneMonthAdded(id: Int, updatedDate: String)
+    fun updatePaymentDay(id: Int, updatedDate: String)
 
 
 }

@@ -31,7 +31,8 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
                 val customer = dao.getCustomerInfo(id)
                 val name = "${customer.firstName} ${customer.secondName}"
 
-                val delayedDays = DateUtil.calculateDelayedDays(customer.paymentDay).toString()
+                var delayedDays = DateUtil.calculateDelayedDays(customer.paymentDay).toString()
+                if (delayedDays.toInt() < 0) delayedDays = "0"
 
                 runOnUiThread {
                     list.clear()

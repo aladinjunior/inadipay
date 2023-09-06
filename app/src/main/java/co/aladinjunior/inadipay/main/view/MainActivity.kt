@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+
+
         val navController = findNavController(R.id.nav_host_fragment_container)
         navController.navigate(R.id.nav_operations)
 

@@ -3,10 +3,14 @@ package co.aladinjunior.inadipay.main.view
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +21,7 @@ import co.aladinjunior.inadipay.register.view.RegisterActivity
 import co.aladinjunior.inadipay.util.App
 import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.OnLongClickListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class OperationsFragment : Fragment(), OnLongClickListener {
@@ -33,13 +38,12 @@ class OperationsFragment : Fragment(), OnLongClickListener {
         super.onViewCreated(view, savedInstanceState)
 
 
-        adapter = MainAdapter(R.layout.container_costumer, list, requireContext(), this)
+        adapter = MainAdapter(list, requireContext(), this)
         val rv = view.findViewById<RecyclerView>(R.id.main_rv)
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
 
         Thread {
-
             val app = requireActivity().application as App
             val dao = app.db.costumerDao()
             val customers = dao.getAllContainers()
@@ -59,37 +63,33 @@ class OperationsFragment : Fragment(), OnLongClickListener {
 
     }
 
-    override fun onLongClick(position: Int, customer: Costumer) {
+    override fun onLongClick(position: Int, customer: Costumer, notifier: ProgressBar) {
         AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.update_message))
             .setNegativeButton(android.R.string.cancel) { dialog, which ->
             }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
-                Thread {
-                    val id = customer.id
-                    val date = DateUtil.toDate(customer.paymentDay)
-                    val app = requireActivity().application as App
-                    val dao = app.db.costumerDao()
 
 
+                Toast.makeText(requireContext(), "pegou", Toast.LENGTH_SHORT).show()
+                    Thread {
+                        val id = customer.id
+                        val date = DateUtil.toDate(customer.paymentDay)
+                        val app = requireActivity().application as App
+                        val dao = app.db.costumerDao()
 
-                    val calendar = Calendar.getInstance()
-                    calendar.time = date
-                    calendar.add(Calendar.MONTH, 1)
-                    val newDate = calendar.time
-                    val strDate = DateUtil.fromDate(newDate)
-                    dao.updateDateWithOneMonthAdded(id, strDate)
+                        val calendar = Calendar.getInstance()
+                        calendar.time = date
+                        calendar.add(Calendar.MONTH, 1)
+                        val newDate = calendar.time
+                        val strDate = DateUtil.fromDate(newDate)
+                        dao.updatePaymentDay(id, strDate)
 
+                        requireActivity().runOnUiThread {
+                            notifier.visibility = View.GONE
 
-//                    val response = dao.delete(customer)
-
-//                    if (response > 0) {
-                    requireActivity().runOnUiThread {
-//                            list.removeAt(position)
-//                            adapter.notifyItemRemoved(position)
                         }
-//                    }
-                }.start()
+                    }.start()
             }
             .create()
             .show()
