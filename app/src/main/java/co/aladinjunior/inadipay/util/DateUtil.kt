@@ -40,6 +40,30 @@ class DateUtil {
             }
         }
 
+        fun toDate(strDate: String, format: String = "dd/MM/yyyy")  : Date {
+            try{
+                val sdf = SimpleDateFormat(format)
+                val date = sdf.parse(strDate)
+                return date
+            } catch (e: Exception){
+                e.printStackTrace()
+                return Date()
+            }
+        }
+
+        fun fromDate(date: Date) : String {
+            try{
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                val strDate = sdf.format(date)
+
+                return strDate
+
+            }catch (e: Exception){
+                e.printStackTrace()
+                return String()
+            }
+        }
+
 
 
     }

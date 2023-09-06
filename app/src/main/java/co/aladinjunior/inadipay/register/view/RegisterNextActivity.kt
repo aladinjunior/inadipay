@@ -32,6 +32,7 @@ class RegisterNextActivity : AppCompatActivity() {
         val name = intent?.extras?.getString("name")
         val surname = intent?.extras?.getString("surname")
         val cpf = intent?.extras?.getString("cpf")
+        val phone = intent?.extras?.getString("phone")
 
 
         date = findViewById(R.id.register_edit_date)
@@ -63,7 +64,8 @@ class RegisterNextActivity : AppCompatActivity() {
                         secondName = surname ?: "sem sobrenome",
                         cpf = cpf ?: "sem cpf",
                         paymentDay = date.text.toString(),
-                        amountReleased = amount.text.toString())
+                        amountReleased = amount.text.toString(),
+                        cellPhone = phone ?: "sem telefone")
 
                     Thread{
                         val app = application as App
@@ -112,16 +114,16 @@ class RegisterNextActivity : AppCompatActivity() {
 
     private fun validateTextFields() {
 
-//        date.setOnFocusChangeListener { v, hasFocus ->
-//            if (!hasFocus) {
-//                val text = date.text.toString().trim()
-//                if (text.isEmpty()) dateInputLayout.error =
-//                    getString(R.string.this_field_cant_be_null)
-//                if (text.length < 10) dateInputLayout.error = getString(R.string.invalid_date)
-//                else dateInputLayout.error = null
-//
-//            }
-//        }
+        date.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val text = date.text.toString().trim()
+                if (text.isEmpty()) dateInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
+                if (text.length < 10) dateInputLayout.error = getString(R.string.invalid_date)
+                else dateInputLayout.error = null
+
+            }
+        }
 
         amount.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {

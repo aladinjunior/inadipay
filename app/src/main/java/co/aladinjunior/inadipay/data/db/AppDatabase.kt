@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import co.aladinjunior.inadipay.data.db.daos.CostumerDao
 import co.aladinjunior.inadipay.data.db.entities.Costumer
 
-@Database(entities = [Costumer::class], version = 1)
+@Database(entities = [Costumer::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun costumerDao(): CostumerDao
@@ -22,7 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         "inadipay"
-                    ).build()
+                    ).fallbackToDestructiveMigration()
+                        .build()
                 }
                 INSTANCE as AppDatabase
             } else {

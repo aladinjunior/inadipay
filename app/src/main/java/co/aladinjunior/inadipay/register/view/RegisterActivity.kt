@@ -88,6 +88,7 @@ class RegisterActivity : AppCompatActivity() {
                         .putExtra("name", name.text.toString())
                         .putExtra("surname", surname.text.toString())
                         .putExtra("cpf", cpf.text.toString())
+                        .putExtra("phone", phone.text.toString())
                     startActivity(i)
 
                 }

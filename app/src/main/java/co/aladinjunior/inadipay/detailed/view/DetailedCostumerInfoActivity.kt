@@ -43,7 +43,7 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
                         DetailedCostumerInfoContainer(Labels.CPF, customer.cpf)
                     )
                     list.add(
-                        DetailedCostumerInfoContainer(Labels.CELLPHONE, "81-98439138")
+                        DetailedCostumerInfoContainer(Labels.CELLPHONE, customer.cellPhone)
                     )
                     list.add(
                         DetailedCostumerInfoContainer(Labels.PAYMENT_DAY, customer.paymentDay)
@@ -55,6 +55,10 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
                     list.add(
                         DetailedCostumerInfoContainer(Labels.AMOUNT_RELEASED, customer.amountReleased)
                     )
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.INSTALLMENT, "10")
+                    )
+                    list.add(DetailedCostumerInfoContainer(Labels.INSTALLMENT_PAYD, "10"))
                 }
             }
 

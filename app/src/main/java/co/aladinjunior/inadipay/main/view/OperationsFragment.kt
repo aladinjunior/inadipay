@@ -15,7 +15,9 @@ import co.aladinjunior.inadipay.data.db.entities.Costumer
 import co.aladinjunior.inadipay.main.model.CostumerContainer
 import co.aladinjunior.inadipay.register.view.RegisterActivity
 import co.aladinjunior.inadipay.util.App
+import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.OnLongClickListener
+import java.util.*
 
 class OperationsFragment : Fragment(), OnLongClickListener {
 
@@ -59,21 +61,34 @@ class OperationsFragment : Fragment(), OnLongClickListener {
 
     override fun onLongClick(position: Int, customer: Costumer) {
         AlertDialog.Builder(requireContext())
-            .setMessage(getString(R.string.delete_message))
+            .setMessage(getString(R.string.update_message))
             .setNegativeButton(android.R.string.cancel) { dialog, which ->
             }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 Thread {
+                    val id = customer.id
+                    val date = DateUtil.toDate(customer.paymentDay)
                     val app = requireActivity().application as App
                     val dao = app.db.costumerDao()
-                    val response = dao.delete(customer)
 
-                    if (response > 0) {
-                        requireActivity().runOnUiThread {
-                            list.removeAt(position)
-                            adapter.notifyItemRemoved(position)
+
+
+                    val calendar = Calendar.getInstance()
+                    calendar.time = date
+                    calendar.add(Calendar.MONTH, 1)
+                    val newDate = calendar.time
+                    val strDate = DateUtil.fromDate(newDate)
+                    dao.updateDateWithOneMonthAdded(id, strDate)
+
+
+//                    val response = dao.delete(customer)
+
+//                    if (response > 0) {
+                    requireActivity().runOnUiThread {
+//                            list.removeAt(position)
+//                            adapter.notifyItemRemoved(position)
                         }
-                    }
+//                    }
                 }.start()
             }
             .create()
