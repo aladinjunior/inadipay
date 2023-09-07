@@ -55,7 +55,7 @@ class MainAdapter(
             name.text = customer.firstName
 
             val amount = itemView.findViewById<TextView>(R.id.amount)
-            amount.text = customer.amountReleased
+            amount.text = context.getString(R.string.total_amount_cardview, customer.amountReleased)
 
             val icon = itemView.findViewById<ImageView>(R.id.status)
 
@@ -63,7 +63,8 @@ class MainAdapter(
             if (paymentDate == currentDate) icon.visibility = View.VISIBLE
             else icon.visibility = View.GONE
 
-            if(currentDate > paymentDate)
+
+
 
             val options = itemView.findViewById<ImageView>(R.id.options)
             options.visibility = View.VISIBLE

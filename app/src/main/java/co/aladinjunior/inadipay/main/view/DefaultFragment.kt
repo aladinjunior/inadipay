@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.entities.Costumer
 import co.aladinjunior.inadipay.register.view.RegisterActivity
 import co.aladinjunior.inadipay.util.App
+import org.w3c.dom.Text
 
 class DefaultFragment : Fragment() {
 
@@ -28,6 +30,7 @@ class DefaultFragment : Fragment() {
 
         adapter = DefaultAdapter(list, requireContext())
         val rv = view.findViewById<RecyclerView>(R.id.default_rv)
+        val defaultText = view.findViewById<TextView>(R.id.default_value)
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
 
@@ -35,7 +38,16 @@ class DefaultFragment : Fragment() {
 
             val app = requireActivity().application as App
             val dao = app.db.costumerDao()
+            val wal = app.db.activeWalletDao()
+            val wallet = wal.getActiveWallet()
             val defaults = dao.getAllDefaults()
+            val installment = dao.getAllInstallmentValue()
+            val percent = (installment / wallet.wallet) * 100
+
+            val percentFormatted = String.format("%.2f%%", percent)
+
+            val response = requireContext().getString(R.string.default_text, installment.toString(), percentFormatted)
+            defaultText.text = response
 
             requireActivity().runOnUiThread {
                 list.addAll(defaults)

@@ -31,6 +31,15 @@ interface CostumerDao {
 
 
 
+    @Query("UPDATE Costumer SET installmentValue = :installmentValue WHERE id =:id ")
+    fun getInstallmentValue(id: Int, installmentValue: Double)
+
+    @Query("SELECT SUM(installmentValue) FROM Costumer WHERE strftime('%Y-%m-%d', 'now') > strftime('%Y-%m-%d', substr(paymentDay, 7, 4) || '-' || substr(paymentDay, 4, 2) || '-' || substr(paymentDay, 1, 2))")
+    fun getAllInstallmentValue() : Double
+
+
+
+
 
 
 

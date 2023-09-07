@@ -71,7 +71,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_edit_phone"
             style="@style/Theme.InadiPay.EditTextStyle"
-            android:maxLength="11"
+            android:maxLength="14"
             android:hint="@string/phone"
             android:inputType="number"/>
 

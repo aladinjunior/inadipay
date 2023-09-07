@@ -1,6 +1,5 @@
 package co.aladinjunior.inadipay.data.db.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -14,5 +13,5 @@ data class Costumer(
     val paymentDay: String,
     val amountReleased: String,
     val cellPhone: String,
-    val defaultValue: String
+    val installmentValue: Double
 )

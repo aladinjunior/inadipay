@@ -62,6 +62,7 @@ class RegisterActivity : AppCompatActivity() {
 
         validateTextFields()
         cpf.addTextChangedListener(Mask.mask("###.###.###-##", cpf))
+        phone.addTextChangedListener(Mask.mask("(##)#####-####", phone))
 
 
 
@@ -157,7 +158,7 @@ class RegisterActivity : AppCompatActivity() {
                 val text = phone.text.toString().trim()
                 if (text.isEmpty()) phoneInputLayout.error =
                     getString(R.string.this_field_cant_be_null)
-                if (text.length < 11) phoneInputLayout.error = getString(R.string.invalid_date)
+                if (text.length < 11) phoneInputLayout.error = getString(R.string.invalid_phone)
                 else phoneInputLayout.error = null
 
             }

@@ -2,10 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_primary"
     android:orientation="vertical"
-    android:id="@+id/relative_layout">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:layout_marginTop="36dp"
+        android:id="@+id/defaults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/defaults"
+        android:textColor="@color/red"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/default_value"
+        android:layout_below="@id/defaults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/default_text"
+        android:textColor="@color/red"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/default_value"
         android:id="@+id/default_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

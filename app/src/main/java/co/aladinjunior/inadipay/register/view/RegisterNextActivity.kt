@@ -21,10 +21,12 @@ class RegisterNextActivity : AppCompatActivity() {
     private lateinit var date: TextInputEditText
     private lateinit var installment: TextInputEditText
     private lateinit var amount: TextInputEditText
+    private lateinit var installmentValue: TextInputEditText
     private lateinit var button: LoadingButton
     private lateinit var installmentInputLayout: TextInputLayout
     private lateinit var dateInputLayout: TextInputLayout
     private lateinit var amountInputLayout: TextInputLayout
+    private lateinit var installmentValueInputLayout: TextInputLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,9 @@ class RegisterNextActivity : AppCompatActivity() {
         amount = findViewById(R.id.register_edit_amount_released)
         installment = findViewById(R.id.register_edit_installment)
         button = findViewById(R.id.register_button)
+        installmentValue = findViewById(R.id.register_edit_installment_value)
 
+        installmentValueInputLayout = findViewById(R.id.register_input_installment_value)
         installmentInputLayout = findViewById(R.id.register_input_installment)
         dateInputLayout = findViewById(R.id.register_input_date)
         amountInputLayout = findViewById(R.id.register_input_amount_released)
@@ -51,40 +55,47 @@ class RegisterNextActivity : AppCompatActivity() {
 
 
 
-
         button = findViewById(R.id.register_button)
         button.setOnClickListener {
             button.showProgress(true)
 
             if (formIsNotEmpty()){
-                if(!DateUtil.validateDate(date.text.toString())){
-                    dateInputLayout.error = getString(R.string.invalid_date)
+                if (installmentValue.text.toString().toDouble() >= amount.text.toString().toDouble()){
+                    Toast.makeText(this, getString(R.string.installment_value_cant_be_bigger), Toast.LENGTH_SHORT).show()
+                    installmentValueInputLayout.error = getString(R.string.invalid_installment)
                     button.showProgress(false)
                 } else {
-                    val costumer = Costumer(firstName = name ?: " sem nome",
-                        secondName = surname ?: "sem sobrenome",
-                        cpf = cpf ?: "sem cpf",
-                        paymentDay = date.text.toString(),
-                        amountReleased = amount.text.toString(),
-                        cellPhone = phone ?: "sem telefone")
+                    if(!DateUtil.validateDate(date.text.toString())){
+                        dateInputLayout.error = getString(R.string.invalid_date)
+                        button.showProgress(false)
+                    } else {
+                        val costumer = Costumer(firstName = name ?: " sem nome",
+                            secondName = surname ?: "sem sobrenome",
+                            cpf = cpf ?: "sem cpf",
+                            paymentDay = date.text.toString(),
+                            amountReleased = amount.text.toString(),
+                            cellPhone = phone ?: "sem telefone",
+                            installmentValue = installmentValue.text.toString().toDouble())
 
-                    Thread{
-                        val app = application as App
-                        val dao = app.db.costumerDao()
-                        dao.insert(costumer)
-                        val wallet = app.db.activeWalletDao()
-                            .updateTotalAmount(dao.getSum())
+                        Thread{
+                            val app = application as App
+                            val dao = app.db.costumerDao()
+                            dao.insert(costumer)
+                            app.db.activeWalletDao()
+                                .updateTotalAmount(dao.getSum())
 
-                        runOnUiThread {
-                            Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
-                            button.showProgress(false)
-                        }
-                    }.start()
+                            runOnUiThread {
+                                Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
+                                button.showProgress(false)
+                            }
+                        }.start()
 
-                    val i = Intent(this, MainActivity::class.java)
-                    startActivity(i)
+                        val i = Intent(this, MainActivity::class.java)
+                        startActivity(i)
 
+                    }
                 }
+
 
             } else {
                 Handler(Looper.getMainLooper())
@@ -95,9 +106,6 @@ class RegisterNextActivity : AppCompatActivity() {
 
 
             }
-
-
-
 
 
 
@@ -112,7 +120,8 @@ class RegisterNextActivity : AppCompatActivity() {
     private fun formIsNotEmpty(): Boolean {
         return (installment.text.toString().isNotEmpty()
                 && date.text.toString().isNotEmpty()
-                && amount.text.toString().isNotEmpty())
+                && amount.text.toString().isNotEmpty()
+                && installmentValue.text.toString().isNotEmpty())
     }
 
 
@@ -145,6 +154,16 @@ class RegisterNextActivity : AppCompatActivity() {
                 if (text.isEmpty()) installmentInputLayout.error =
                     getString(R.string.this_field_cant_be_null)
                 installmentInputLayout.error = null
+
+            }
+        }
+
+        installmentValue.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val text = installmentValue.text.toString().trim()
+                if (text.isEmpty()) installmentValueInputLayout.error =
+                    getString(R.string.this_field_cant_be_null)
+                installmentValueInputLayout.error = null
 
             }
         }

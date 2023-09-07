@@ -32,4 +32,12 @@
     <string name="total_amount">R$ %1$s</string>
     <string name="type_payment_amount">Valor do Pagamento</string>
     <string name="payment_cant_be_bigger">valor de pagamento não pode ser maior que valor da carteira ativa!</string>
+    <string name="defaults">Inadimplência</string>
+    <string name="default_text">Valor total em inadimplência: R$%1$s (%2$s)</string>
+    <string name="intallment_value">Valor das Parcelas</string>
+    <string name="invalid_phone">Celular inválido</string>
+    <string name="installment_value_cant_be_bigger">Valor da parcela não pode ser maior que valor a ser liberado</string>
+    <string name="invalid_installment">Valor das parcelas inválido</string>
+    <string name="total_amount_cardview">Valor Total Liberado: R$%1$s</string>
+
 </resources>

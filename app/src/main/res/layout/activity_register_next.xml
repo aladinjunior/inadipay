@@ -56,6 +56,19 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.InadiPay.TextInputLayoutStyle"
+            android:id="@+id/register_input_installment_value"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_edit_installment_value"
+                style="@style/Theme.InadiPay.EditTextStyle"
+                android:hint="@string/intallment_value"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <co.aladinjunior.inadipay.register.view.LoadingButton
             android:id="@+id/register_button"
             app:text="@string/register"

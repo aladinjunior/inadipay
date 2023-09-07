@@ -19,7 +19,7 @@ class AlertDialog {
             val editText = EditText(context)
             val errorText = context.getString(R.string.this_field_cant_be_null)
             editText.hint = context.getString(R.string.type_payment_amount)
-            editText.inputType = InputType.TYPE_CLASS_NUMBER
+            editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
 
             AlertDialog.Builder(context)
                 .setMessage(context.getString(R.string.update_message))
@@ -28,8 +28,8 @@ class AlertDialog {
                 }
                 .setPositiveButton(android.R.string.ok) { dialog, which ->
                     val inputText = editText.text.toString().trim()
-                    if (inputText.isEmpty()) {
-                        editText.error = errorText
+                    if (inputText.isEmpty() ) {
+                        Toast.makeText(context, "valor do pagamento não pode ser igual a zero", Toast.LENGTH_SHORT).show()
                     } else {
                         Thread {
                             val id = customer.id
@@ -38,6 +38,7 @@ class AlertDialog {
                             val dao = app.db.costumerDao()
                             val aw = app.db.activeWalletDao()
 
+                            dao.getInstallmentValue(id, inputText.toDouble())
                             val currentWallet = aw.getActiveWallet()
 
                             val newAmount =   currentWallet.wallet - inputText.toDouble()
