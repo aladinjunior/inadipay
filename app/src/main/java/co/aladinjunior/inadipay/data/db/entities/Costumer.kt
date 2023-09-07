@@ -13,5 +13,7 @@ data class Costumer(
     val paymentDay: String,
     val amountReleased: String,
     val cellPhone: String,
-    val installmentValue: Double
+    val installmentValue: Double,
+    val installments: Int,
+    val installmentPaids: Int = 0
 )

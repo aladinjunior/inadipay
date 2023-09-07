@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.LayoutRes
+
 import androidx.recyclerview.widget.RecyclerView
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.detailed.model.DetailedCostumerInfoContainer
-import co.aladinjunior.inadipay.main.model.CostumerContainer
+
 
 class DetailedAdapter(private val containerList: List<DetailedCostumerInfoContainer>, ) : RecyclerView.Adapter<DetailedAdapter.ViewHolder>() {
 

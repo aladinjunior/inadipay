@@ -13,9 +13,9 @@ import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.entities.Costumer
 import co.aladinjunior.inadipay.detailed.model.DetailedCostumerInfoContainer
 import co.aladinjunior.inadipay.detailed.view.DetailedCostumerInfoActivity
-import co.aladinjunior.inadipay.main.model.CostumerContainer
+
 import co.aladinjunior.inadipay.util.DateUtil
-import co.aladinjunior.inadipay.util.OnLongClickListener
+
 
 class DefaultAdapter(
     private val containerList: List<Costumer>,

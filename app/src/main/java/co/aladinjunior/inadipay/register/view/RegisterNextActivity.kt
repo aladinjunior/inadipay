@@ -75,7 +75,8 @@ class RegisterNextActivity : AppCompatActivity() {
                             paymentDay = date.text.toString(),
                             amountReleased = amount.text.toString(),
                             cellPhone = phone ?: "sem telefone",
-                            installmentValue = installmentValue.text.toString().toDouble())
+                            installmentValue = installmentValue.text.toString().toDouble(),
+                            installments = installment.text.toString().toInt())
 
                         Thread{
                             val app = application as App

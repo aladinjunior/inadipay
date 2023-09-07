@@ -39,5 +39,9 @@
     <string name="installment_value_cant_be_bigger">Valor da parcela não pode ser maior que valor a ser liberado</string>
     <string name="invalid_installment">Valor das parcelas inválido</string>
     <string name="total_amount_cardview">Valor Total Liberado: R$%1$s</string>
+    <string name="cant_be_zero">valor do pagamento não pode ser igual a zero.</string>
+    <string name="wallet_is_null">Cadastre clientes antes</string>
+    <string name="still_nothing">Nenhum Cliente Cadastrado</string>
+    <string name="error">Não foi possível deletar, tente novamente mais tarde</string>
 
 </resources>

@@ -29,7 +29,6 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
 
             if(id != null) {
                 val customer = dao.getCustomerInfo(id)
-                val name = "${customer.firstName} ${customer.secondName}"
 
                 var delayedDays = DateUtil.calculateDelayedDays(customer.paymentDay).toString()
                 if (delayedDays.toInt() < 0) delayedDays = "0"
@@ -38,7 +37,10 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
                     list.clear()
 
                     list.add(
-                        DetailedCostumerInfoContainer(Labels.NAME, name)
+                        DetailedCostumerInfoContainer(Labels.NAME, customer.firstName)
+                    )
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.SURNAME, customer.secondName)
                     )
                     list.add(
                         DetailedCostumerInfoContainer(Labels.CPF, customer.cpf)
@@ -57,9 +59,13 @@ class DetailedCostumerInfoActivity : AppCompatActivity() {
                         DetailedCostumerInfoContainer(Labels.AMOUNT_RELEASED, customer.amountReleased)
                     )
                     list.add(
-                        DetailedCostumerInfoContainer(Labels.INSTALLMENT, "10")
+                        DetailedCostumerInfoContainer(Labels.INSTALLMENT, customer.installments.toString())
                     )
-                    list.add(DetailedCostumerInfoContainer(Labels.INSTALLMENT_PAYD, "10"))
+                    list.add(
+                        DetailedCostumerInfoContainer(Labels.INSTALLMENT_VALUE, customer.installmentValue.toString())
+                    )
+                    list.add(DetailedCostumerInfoContainer(Labels.INSTALLMENT_PAYD, customer.installmentPaids.toString())
+                    )
                 }
             }
 

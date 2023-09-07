@@ -76,6 +76,13 @@ class MainAdapter(
                     when (it.itemId) {
                         R.id.delete -> {
 
+                            AlertDialog.buildDeleteDialog(
+                                customer,
+                                context,
+                                this@MainAdapter,
+                                adapterPosition
+                            )
+
                             true
                         }
                         R.id.confirm -> {

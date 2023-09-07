@@ -2,11 +2,15 @@ package co.aladinjunior.inadipay.main.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +35,7 @@ class DefaultFragment : Fragment() {
         adapter = DefaultAdapter(list, requireContext())
         val rv = view.findViewById<RecyclerView>(R.id.default_rv)
         val defaultText = view.findViewById<TextView>(R.id.default_value)
+        val cardView = view.findViewById<CardView>(R.id.cardview)
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
 
@@ -40,19 +45,34 @@ class DefaultFragment : Fragment() {
             val dao = app.db.costumerDao()
             val wal = app.db.activeWalletDao()
             val wallet = wal.getActiveWallet()
-            val defaults = dao.getAllDefaults()
-            val installment = dao.getAllInstallmentValue()
-            val percent = (installment / wallet.wallet) * 100
+            if (wallet != null){
+                cardView.visibility = View.GONE
+                defaultText.visibility = View.VISIBLE
+                rv.visibility = View.VISIBLE
 
-            val percentFormatted = String.format("%.2f%%", percent)
+                val defaults = dao.getAllDefaults()
+                val installment = dao.getAllInstallmentValue()
+                val percent = (installment / wallet.wallet) * 100
 
-            val response = requireContext().getString(R.string.default_text, installment.toString(), percentFormatted)
-            defaultText.text = response
+                val percentFormatted = String.format("%.2f%%", percent)
 
-            requireActivity().runOnUiThread {
-                list.addAll(defaults)
-                adapter.notifyDataSetChanged()
+                val response = requireContext().getString(R.string.default_text, installment.toString(), percentFormatted)
+                defaultText.text = response
+
+                requireActivity().runOnUiThread {
+                    list.addAll(defaults)
+                    adapter.notifyDataSetChanged()
+                }
+            } else {
+                Handler(Looper.getMainLooper())
+                    .post {
+                        cardView.visibility = View.VISIBLE
+                        defaultText.visibility = View.GONE
+                        rv.visibility = View.GONE
+                    }
+
             }
+
 
         }.start()
 

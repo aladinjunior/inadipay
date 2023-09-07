@@ -2,7 +2,7 @@ package co.aladinjunior.inadipay.data.db.daos
 
 import androidx.room.*
 import co.aladinjunior.inadipay.data.db.entities.Costumer
-import co.aladinjunior.inadipay.main.model.CostumerContainer
+
 
 @Dao
 interface CostumerDao {
@@ -36,6 +36,9 @@ interface CostumerDao {
 
     @Query("SELECT SUM(installmentValue) FROM Costumer WHERE strftime('%Y-%m-%d', 'now') > strftime('%Y-%m-%d', substr(paymentDay, 7, 4) || '-' || substr(paymentDay, 4, 2) || '-' || substr(paymentDay, 1, 2))")
     fun getAllInstallmentValue() : Double
+
+    @Query("UPDATE COSTUMER SET installmentPaids = :installmentPaids WHERE id = :id")
+    fun updateInstallmentPaids(id: Int, installmentPaids: Int) : Int
 
 
 

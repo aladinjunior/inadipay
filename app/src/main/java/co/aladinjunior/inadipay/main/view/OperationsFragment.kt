@@ -17,13 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.entities.Costumer
-import co.aladinjunior.inadipay.main.model.CostumerContainer
+
 import co.aladinjunior.inadipay.register.view.RegisterActivity
 import co.aladinjunior.inadipay.util.App
-import co.aladinjunior.inadipay.util.DateUtil
-import co.aladinjunior.inadipay.util.OnLongClickListener
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
+
 
 class OperationsFragment : Fragment() {
 
