@@ -20,4 +20,5 @@
         android:name="co.aladinjunior.inadipay.main.view.ActiveWalletFragment"/>
 
 
+
 </navigation>

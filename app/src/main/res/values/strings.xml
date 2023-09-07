@@ -27,4 +27,9 @@
     <string name="amount">1000</string>
     <string name="delete">Apagar Registro</string>
     <string name="confirm_payment">Confirmar Pagamento</string>
+    <string name="active_wallet">Carteira Ativa</string>
+    <string name="credit_amount">Valor Total de Crédito Emprestado</string>
+    <string name="total_amount">R$ %1$s</string>
+    <string name="type_payment_amount">Valor do Pagamento</string>
+    <string name="payment_cant_be_bigger">valor de pagamento não pode ser maior que valor da carteira ativa!</string>
 </resources>

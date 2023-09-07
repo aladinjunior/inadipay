@@ -7,6 +7,7 @@ import co.aladinjunior.inadipay.main.model.CostumerContainer
 @Dao
 interface CostumerDao {
 
+
     @Insert
     fun insert(costumer: Costumer)
 
@@ -16,7 +17,7 @@ interface CostumerDao {
     @Delete
     fun delete(costumer: Costumer) : Int
 
-    @Query("SELECT id, secondName, firstName, cpf, paymentDay, amountReleased, cellPhone FROM Costumer WHERE id = :id")
+    @Query("SELECT * FROM Costumer WHERE id = :id")
     fun getCustomerInfo(id: Int) : Costumer
 
     @Query("SELECT * FROM Costumer WHERE strftime('%Y-%m-%d', 'now') > strftime('%Y-%m-%d', substr(paymentDay, 7, 4) || '-' || substr(paymentDay, 4, 2) || '-' || substr(paymentDay, 1, 2))")
@@ -24,6 +25,14 @@ interface CostumerDao {
 
     @Query("UPDATE Costumer SET paymentDay = :updatedDate WHERE id = :id")
     fun updatePaymentDay(id: Int, updatedDate: String)
+
+    @Query("SELECT SUM(CAST(amountReleased AS REAL)) FROM Costumer")
+    fun getSum() : Double
+
+
+
+
+
 
 
 }

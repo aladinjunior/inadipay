@@ -25,7 +25,7 @@ import co.aladinjunior.inadipay.util.OnLongClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
-class OperationsFragment : Fragment(), OnLongClickListener {
+class OperationsFragment : Fragment() {
 
     val list = mutableListOf<Costumer>()
     private lateinit var adapter: MainAdapter
@@ -39,7 +39,7 @@ class OperationsFragment : Fragment(), OnLongClickListener {
         super.onViewCreated(view, savedInstanceState)
 
 
-        adapter = MainAdapter(list, requireContext(), this)
+        adapter = MainAdapter(list, requireContext())
         val rv = view.findViewById<RecyclerView>(R.id.main_rv)
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
@@ -56,6 +56,7 @@ class OperationsFragment : Fragment(), OnLongClickListener {
 
         }.start()
 
+
         view.findViewById<TextView>(R.id.register).setOnClickListener {
             val i = Intent(requireContext(), RegisterActivity::class.java)
             startActivity(i)
@@ -64,35 +65,5 @@ class OperationsFragment : Fragment(), OnLongClickListener {
 
     }
 
-    override fun onLongClick(position: Int, customer: Costumer, notifier: ProgressBar) {
-        AlertDialog.Builder(requireContext())
-            .setMessage(getString(R.string.update_message))
-            .setNegativeButton(android.R.string.cancel) { dialog, which ->
-            }
-            .setPositiveButton(android.R.string.ok) { dialog, which ->
 
-
-                Toast.makeText(requireContext(), "pegou", Toast.LENGTH_SHORT).show()
-                    Thread {
-                        val id = customer.id
-                        val date = DateUtil.toDate(customer.paymentDay)
-                        val app = requireActivity().application as App
-                        val dao = app.db.costumerDao()
-
-                        val calendar = Calendar.getInstance()
-                        calendar.time = date
-                        calendar.add(Calendar.MONTH, 1)
-                        val newDate = calendar.time
-                        val strDate = DateUtil.fromDate(newDate)
-                        dao.updatePaymentDay(id, strDate)
-
-                        requireActivity().runOnUiThread {
-                            notifier.visibility = View.GONE
-
-                        }
-                    }.start()
-            }
-            .create()
-            .show()
-    }
 }

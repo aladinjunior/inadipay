@@ -13,5 +13,6 @@ data class Costumer(
     val cpf: String,
     val paymentDay: String,
     val amountReleased: String,
-    val cellPhone: String
+    val cellPhone: String,
+    val defaultValue: String
 )

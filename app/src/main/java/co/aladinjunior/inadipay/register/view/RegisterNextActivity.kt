@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import co.aladinjunior.inadipay.R
+import co.aladinjunior.inadipay.data.db.entities.ActiveWallet
 import co.aladinjunior.inadipay.data.db.entities.Costumer
 import co.aladinjunior.inadipay.main.view.MainActivity
 import co.aladinjunior.inadipay.util.App
@@ -71,6 +72,9 @@ class RegisterNextActivity : AppCompatActivity() {
                         val app = application as App
                         val dao = app.db.costumerDao()
                         dao.insert(costumer)
+                        val wallet = app.db.activeWalletDao()
+                            .updateTotalAmount(dao.getSum())
+
                         runOnUiThread {
                             Toast.makeText(this, "salvo com sucesso", Toast.LENGTH_SHORT).show()
                             button.showProgress(false)

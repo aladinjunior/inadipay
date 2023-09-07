@@ -5,16 +5,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.LayoutRes
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.entities.Costumer
 import co.aladinjunior.inadipay.detailed.model.DetailedCostumerInfoContainer
 import co.aladinjunior.inadipay.detailed.view.DetailedCostumerInfoActivity
 import co.aladinjunior.inadipay.main.model.CostumerContainer
+import co.aladinjunior.inadipay.util.DateUtil
 import co.aladinjunior.inadipay.util.OnLongClickListener
 
 class DefaultAdapter(
@@ -22,7 +22,7 @@ class DefaultAdapter(
     private val context: Context) : RecyclerView.Adapter<DefaultAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.container_costumer, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.container_customer, parent, false)
         return ViewHolder(view)
     }
 
@@ -36,20 +36,36 @@ class DefaultAdapter(
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(container: Costumer){
-            val costumerName = itemView.findViewById<TextView>(R.id.main_text_costumer_name)
-            costumerName.setTextColor(context.resources.getColor(R.color.red))
-            costumerName.text = container.firstName
-            val costumerBill = itemView.findViewById<TextView>(R.id.main_text_costumer_bill)
-            costumerBill.setTextColor(context.resources.getColor(R.color.red))
-            costumerBill.text = container.amountReleased
-            val costumerContainer = itemView as FrameLayout
-            costumerContainer.setBackgroundResource(R.drawable.container_costumer_default_background)
+        fun bind(customer: Costumer){
+            val strDate = DateUtil.getCurrentDate()
+
+            val splitDate = customer.paymentDay.split("/")
+            val day = splitDate[0]
+
+            val monthName = DateUtil.getMonthName(customer)
+
+            val date = itemView.findViewById<TextView>(R.id.date)
+            date.text = day
+
+            val monthView = itemView.findViewById<TextView>(R.id.month)
+            monthView.text = monthName
+
+            val name = itemView.findViewById<TextView>(R.id.name)
+            name.text = customer.firstName
+
+            val amount = itemView.findViewById<TextView>(R.id.amount)
+            amount.text = customer.amountReleased
+
+
+
+            val costumerContainer = itemView as CardView
+
             costumerContainer.setOnClickListener {
                 val i = Intent(context, DetailedCostumerInfoActivity::class.java)
-                    .putExtra("id", container.id)
+                    .putExtra("id", customer.id)
                 context.startActivity(i)
             }
+
 
         }
 
