@@ -21,41 +21,28 @@ class ActiveWalletFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val walletView = view.findViewById<TextView>(R.id.wallet)
 
-            val walletView = view.findViewById<TextView>(R.id.wallet)
-
-        Thread{
+        Thread {
             val app = requireActivity().application as App
             val dao = app.db.costumerDao()
             val wallet = app.db.activeWalletDao()
-            var existingWallet = wallet.getActiveWallet()
 
-            if (existingWallet == null){
-                existingWallet = ActiveWallet(wallet = dao.getSum())
-                wallet.insert(existingWallet)
+            // Verifique se a carteira existe no banco de dados
+            val existingWallet = wallet.getActiveWallet()
+
+            if (existingWallet == null) {
+                // A carteira não existe, você pode criar um novo registro se necessário
+                val newWallet = ActiveWallet(wallet = dao.getAllRemainingValue())
+                wallet.insert(newWallet)
             } else {
-                walletView.visibility = View.VISIBLE
-                val walletResponse = getString(R.string.total_amount, existingWallet.wallet.toString())
+                // A carteira existe, atualize a exibição com o valor existente
                 requireActivity().runOnUiThread {
+                    walletView.visibility = View.VISIBLE
+                    val walletResponse = getString(R.string.total_amount, existingWallet.wallet.toString())
                     walletView.text = walletResponse
                 }
             }
-
-
         }.start()
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
 }

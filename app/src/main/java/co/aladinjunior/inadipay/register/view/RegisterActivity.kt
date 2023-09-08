@@ -90,6 +90,7 @@ class RegisterActivity : AppCompatActivity() {
                         .putExtra("surname", surname.text.toString())
                         .putExtra("cpf", cpf.text.toString())
                         .putExtra("phone", phone.text.toString())
+                    button.showProgress(false)
                     startActivity(i)
 
                 }

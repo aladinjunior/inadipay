@@ -38,8 +38,19 @@ class AlertDialog {
 
                             val newAmount =   currentWallet.wallet - customer.amountReleased.toDouble()
                             if(newAmount < 0){
-                                Handler(Looper.getMainLooper())
-                                    .post { Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_LONG).show() }
+                                aw.updateTotalAmount(0.0)
+                                val response = dao.delete(costumer)
+
+
+                                if (response > 0){
+                                    Handler(Looper.getMainLooper()).post {
+                                        adapter.notifyItemRemoved(position)
+
+                                    }
+                                }
+                                Handler(Looper.getMainLooper()).post {
+                                    Toast.makeText(context, context.getString(R.string.wallet_now_zero), Toast.LENGTH_LONG).show()
+                                    }
 
                             } else {
                                 aw.updateTotalAmount(newAmount)
@@ -75,7 +86,7 @@ class AlertDialog {
                 }
                 .setPositiveButton(android.R.string.ok) { dialog, which ->
                     val inputText = editText.text.toString().trim()
-                    if (inputText.isEmpty() ) {
+                    if (inputText.isEmpty()) {
                         Toast.makeText(context, context.getString(R.string.cant_be_zero), Toast.LENGTH_SHORT).show()
                     } else {
                         Thread {
@@ -85,15 +96,24 @@ class AlertDialog {
                             val dao = app.db.costumerDao()
                             val aw = app.db.activeWalletDao()
 
-                            dao.getInstallmentValue(id, inputText.toDouble())
+                            val paymentAmount = inputText.toDouble()
+
+                            // Obtenha o valor atual da carteira
                             val currentWallet = aw.getActiveWallet()
 
-                            val newAmount =   currentWallet.wallet - inputText.toDouble()
-                            if(newAmount < 0){
-                                Handler(Looper.getMainLooper())
-                                    .post { Toast.makeText(context, context.getString(R.string.payment_cant_be_bigger), Toast.LENGTH_LONG).show() }
-
+                            // Verifique se o pagamento é maior do que o valor da carteira
+                            if (paymentAmount > currentWallet.wallet) {
+                                Handler(Looper.getMainLooper()).post {
+                                    Toast.makeText(context, context.getString(R.string.payment_cant_be_bigger), Toast.LENGTH_LONG).show()
+                                }
                             } else {
+                                // Calcule o novo valor da carteira
+                                val newWalletAmount = currentWallet.wallet - paymentAmount
+
+                                // Atualize o valor da carteira no banco de dados
+                                aw.updateTotalAmount(newWalletAmount)
+
+                                // Execute outras operações de atualização de pagamento
                                 val calendar = Calendar.getInstance()
                                 calendar.time = date
                                 calendar.add(Calendar.MONTH, 1)
@@ -101,21 +121,22 @@ class AlertDialog {
                                 val strDate = DateUtil.fromDate(newDate)
                                 dao.updatePaymentDay(id, strDate)
                                 dao.updateInstallmentPaids(id, customer.installmentPaids + 1)
-                                aw.updateTotalAmount(newAmount)
-
+                                dao.updateRemainingValue(id, customer.amountReleased.toDouble() - paymentAmount )
 
                                 Handler(Looper.getMainLooper()).post {
                                     adapter.notifyDataSetChanged()
-
                                 }
-
                             }
-
                         }.start()
                     }
                 }
                 .create()
                 .show()
+
+
         }
+
     }
-}
+
+        }
+

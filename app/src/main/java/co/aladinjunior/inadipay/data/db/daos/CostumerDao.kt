@@ -40,6 +40,12 @@ interface CostumerDao {
     @Query("UPDATE COSTUMER SET installmentPaids = :installmentPaids WHERE id = :id")
     fun updateInstallmentPaids(id: Int, installmentPaids: Int) : Int
 
+    @Query("UPDATE Costumer SET remainingValue = :remainingValue WHERE id = :id")
+    fun updateRemainingValue(id: Int, remainingValue: Double) : Int
+
+    @Query("SELECT SUM(remainingValue) FROM Costumer")
+    fun getAllRemainingValue() : Double
+
 
 
 

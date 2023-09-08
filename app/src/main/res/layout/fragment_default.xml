@@ -8,51 +8,6 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="10dp"
-        app:contentPadding="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/defaults"
-        android:layout_width="500dp"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/still_nothing"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textColor="@color/red"/>
-
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-
-
-            <ImageView
-                android:alpha="0.3"
-                android:src="@drawable/empty"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-
-                />
-
-        </LinearLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
 
     <TextView
         android:layout_marginTop="36dp"
@@ -65,7 +20,6 @@
         android:textStyle="bold" />
 
     <TextView
-        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:id="@+id/default_value"
         android:layout_below="@id/defaults"
@@ -77,7 +31,6 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_below="@id/default_value"
         android:id="@+id/default_rv"

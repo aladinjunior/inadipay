@@ -43,5 +43,6 @@
     <string name="wallet_is_null">Cadastre clientes antes</string>
     <string name="still_nothing">Nenhum Cliente Cadastrado</string>
     <string name="error">Não foi possível deletar, tente novamente mais tarde</string>
+    <string name="wallet_now_zero">Carteira zerada</string>
 
 </resources>

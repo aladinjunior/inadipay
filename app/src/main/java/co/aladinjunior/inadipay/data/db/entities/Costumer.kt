@@ -15,5 +15,6 @@ data class Costumer(
     val cellPhone: String,
     val installmentValue: Double,
     val installments: Int,
-    val installmentPaids: Int = 0
+    val installmentPaids: Int = 0,
+    val remainingValue: Double = amountReleased.toDouble()
 )

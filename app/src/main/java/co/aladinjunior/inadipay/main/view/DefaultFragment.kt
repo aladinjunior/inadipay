@@ -35,7 +35,7 @@ class DefaultFragment : Fragment() {
         adapter = DefaultAdapter(list, requireContext())
         val rv = view.findViewById<RecyclerView>(R.id.default_rv)
         val defaultText = view.findViewById<TextView>(R.id.default_value)
-        val cardView = view.findViewById<CardView>(R.id.cardview)
+
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
 
@@ -46,10 +46,6 @@ class DefaultFragment : Fragment() {
             val wal = app.db.activeWalletDao()
             val wallet = wal.getActiveWallet()
             if (wallet != null){
-                cardView.visibility = View.GONE
-                defaultText.visibility = View.VISIBLE
-                rv.visibility = View.VISIBLE
-
                 val defaults = dao.getAllDefaults()
                 val installment = dao.getAllInstallmentValue()
                 val percent = (installment / wallet.wallet) * 100
@@ -66,9 +62,7 @@ class DefaultFragment : Fragment() {
             } else {
                 Handler(Looper.getMainLooper())
                     .post {
-                        cardView.visibility = View.VISIBLE
-                        defaultText.visibility = View.GONE
-                        rv.visibility = View.GONE
+
                     }
 
             }
