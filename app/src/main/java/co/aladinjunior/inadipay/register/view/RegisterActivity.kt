@@ -68,9 +68,6 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
-
-
-
         button = findViewById(R.id.register_button)
         button.setOnClickListener {
             button.showProgress(true)

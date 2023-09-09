@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/red"
     tools:context=".register.view.RegisterActivity">
 
     <LinearLayout
@@ -12,15 +13,13 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/register_costumer"
-        android:textAlignment="center"
-        android:layout_marginBottom="20dp"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
+
+        <ImageView
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +80,7 @@
     <co.aladinjunior.inadipay.register.view.LoadingButton
         android:id="@+id/register_button"
         app:text="@string/next"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
