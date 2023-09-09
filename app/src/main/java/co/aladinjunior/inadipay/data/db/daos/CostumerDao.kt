@@ -34,17 +34,20 @@ interface CostumerDao {
     @Query("UPDATE Costumer SET installmentValue = :installmentValue WHERE id =:id ")
     fun getInstallmentValue(id: Int, installmentValue: Double)
 
-    @Query("SELECT SUM(installmentValue) FROM Costumer WHERE strftime('%Y-%m-%d', 'now') > strftime('%Y-%m-%d', substr(paymentDay, 7, 4) || '-' || substr(paymentDay, 4, 2) || '-' || substr(paymentDay, 1, 2))")
+    @Query("SELECT SUM(amountReleased) FROM Costumer WHERE strftime('%Y-%m-%d', 'now') > strftime('%Y-%m-%d', substr(paymentDay, 7, 4) || '-' || substr(paymentDay, 4, 2) || '-' || substr(paymentDay, 1, 2))")
     fun getAllInstallmentValue() : Double
 
     @Query("UPDATE COSTUMER SET installmentPaids = :installmentPaids WHERE id = :id")
     fun updateInstallmentPaids(id: Int, installmentPaids: Int) : Int
 
     @Query("UPDATE Costumer SET remainingValue = :remainingValue WHERE id = :id")
-    fun updateRemainingValue(id: Int, remainingValue: Double) : Int
+    fun updateRemainingValue(id: Int, remainingValue: Double)
 
     @Query("SELECT SUM(remainingValue) FROM Costumer")
     fun getAllRemainingValue() : Double
+
+    @Query("UPDATE Costumer SET paidNextDay  = :state WHERE id = :id")
+    fun updatePaidNextDay(id: Int, state: Int)
 
 
 

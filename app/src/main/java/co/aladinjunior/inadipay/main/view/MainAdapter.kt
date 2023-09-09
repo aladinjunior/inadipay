@@ -12,7 +12,9 @@ import co.aladinjunior.inadipay.R
 import co.aladinjunior.inadipay.data.db.entities.Costumer
 import co.aladinjunior.inadipay.detailed.view.DetailedCostumerInfoActivity
 import co.aladinjunior.inadipay.util.AlertDialog
+import co.aladinjunior.inadipay.util.App
 import co.aladinjunior.inadipay.util.DateUtil
+import org.w3c.dom.Text
 import java.util.*
 
 
@@ -37,6 +39,9 @@ class MainAdapter(
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        private var alertDialogShown = false
+
         fun bind(customer: Costumer) {
             val strDate = DateUtil.getCurrentDate()
             val currentDate = DateUtil.toDate(strDate)
@@ -44,6 +49,7 @@ class MainAdapter(
             val splitDate = customer.paymentDay.split("/")
             val day = splitDate[0]
             val monthName = DateUtil.getMonthName(customer)
+            val rememberText = itemView.findViewById<TextView>(R.id.remember)
 
             val date = itemView.findViewById<TextView>(R.id.date)
             date.text = day
@@ -60,8 +66,33 @@ class MainAdapter(
             val icon = itemView.findViewById<ImageView>(R.id.status)
 
 
+            val calendar = Calendar.getInstance()
+            calendar.time = paymentDate
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            val nextDayDate = calendar.time
+
+
+
+
+
+
+
             if (paymentDate == currentDate) icon.visibility = View.VISIBLE
             else icon.visibility = View.GONE
+
+
+
+           if(currentDate == nextDayDate) rememberText.visibility = View.VISIBLE
+            else rememberText.visibility = View.GONE
+
+
+
+
+
+
+
+
+
 
 
 

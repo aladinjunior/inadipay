@@ -16,5 +16,13 @@ data class Costumer(
     val installmentValue: Double,
     val installments: Int,
     val installmentPaids: Int = 0,
-    val remainingValue: Double = amountReleased.toDouble()
-)
+    var remainingValue: Double = amountReleased.toDouble(),
+    var paidNextDay: Int = 0
+    )
+
+
+
+
+
+
+

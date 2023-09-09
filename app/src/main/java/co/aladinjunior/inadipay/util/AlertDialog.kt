@@ -36,11 +36,10 @@ class AlertDialog {
 
                             val currentWallet = aw.getActiveWallet()
 
-                            val newAmount =   currentWallet.wallet - customer.amountReleased.toDouble()
+                            val newAmount  =   currentWallet.wallet - customer.remainingValue!!
                             if(newAmount < 0){
                                 aw.updateTotalAmount(0.0)
                                 val response = dao.delete(costumer)
-
 
                                 if (response > 0){
                                     Handler(Looper.getMainLooper()).post {
@@ -101,8 +100,10 @@ class AlertDialog {
                             // Obtenha o valor atual da carteira
                             val currentWallet = aw.getActiveWallet()
 
+
+
                             // Verifique se o pagamento é maior do que o valor da carteira
-                            if (paymentAmount > currentWallet.wallet) {
+                            if (paymentAmount > currentWallet.wallet || paymentAmount > customer.remainingValue) {
                                 Handler(Looper.getMainLooper()).post {
                                     Toast.makeText(context, context.getString(R.string.payment_cant_be_bigger), Toast.LENGTH_LONG).show()
                                 }
@@ -110,8 +111,16 @@ class AlertDialog {
                                 // Calcule o novo valor da carteira
                                 val newWalletAmount = currentWallet.wallet - paymentAmount
 
+                                val x = customer.amountReleased.toDouble() - paymentAmount
+
+
+
+
+                                dao.updateRemainingValue(id, customer.remainingValue - paymentAmount)
+
                                 // Atualize o valor da carteira no banco de dados
-                                aw.updateTotalAmount(newWalletAmount)
+
+
 
                                 // Execute outras operações de atualização de pagamento
                                 val calendar = Calendar.getInstance()
@@ -121,7 +130,8 @@ class AlertDialog {
                                 val strDate = DateUtil.fromDate(newDate)
                                 dao.updatePaymentDay(id, strDate)
                                 dao.updateInstallmentPaids(id, customer.installmentPaids + 1)
-                                dao.updateRemainingValue(id, customer.amountReleased.toDouble() - paymentAmount )
+
+                                aw.updateTotalAmount(newWalletAmount)
 
                                 Handler(Looper.getMainLooper()).post {
                                     adapter.notifyDataSetChanged()

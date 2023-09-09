@@ -1,0 +1,23 @@
+[33mdf40c71[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{0}: commit: issues fixed 2.0
+[33m97a4368[m HEAD@{1}: reset: moving to 97a4368
+[33m97a4368[m HEAD@{2}: commit: issues fixed
+[33m72736af[m HEAD@{3}: commit: working code savepoint - finalized db
+[33m46f56b2[m HEAD@{4}: commit: savepoint working code
+[33mbf6d2cd[m HEAD@{5}: commit: new adapter implemented
+[33m4a74330[m HEAD@{6}: commit: db default query ajusted
+[33m0ecc118[m HEAD@{7}: commit: date payment added
+[33m0b9b0c3[m HEAD@{8}: commit: register new layout created
+[33m4d1098e[m HEAD@{9}: commit: version beta 2.0 working
+[33m274e7ac[m HEAD@{10}: commit: beta version working
+[33m99225ef[m HEAD@{11}: commit: default fragment implemented
+[33m0fb52e2[m HEAD@{12}: commit: db modified and implemented on detailed activity
+[33m38be8e0[m HEAD@{13}: commit: intent register to main activity created
+[33m6c70c8e[m HEAD@{14}: commit: db implemented
+[33mb1df98d[m HEAD@{15}: commit: date format used
+[33mb90a7b7[m HEAD@{16}: commit: register layout modified
+[33md94c2d8[m HEAD@{17}: commit: register layout created
+[33m39e0ff4[m HEAD@{18}: commit: detailed costumer layout created
+[33mba56db6[m HEAD@{19}: commit: view package created
+[33m8544a04[m HEAD@{20}: commit: layout created
+[33me035daa[m HEAD@{21}: commit: util package created
+[33m44d6ae2[m HEAD@{22}: commit (initial): initial commit

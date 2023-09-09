@@ -92,6 +92,15 @@
                 android:textSize="14sp"
                 android:textColor="@android:color/black"/>
 
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/customer_paid"
+                android:id="@+id/remember"
+                android:textSize="14sp"
+                android:textColor="@color/red"/>
+
 
 
             <ImageView

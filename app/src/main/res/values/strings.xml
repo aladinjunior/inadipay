@@ -44,5 +44,9 @@
     <string name="still_nothing">Nenhum Cliente Cadastrado</string>
     <string name="error">Não foi possível deletar, tente novamente mais tarde</string>
     <string name="wallet_now_zero">Carteira zerada</string>
+    <string name="does_the_client_paid">O cliente pagou?</string>
+    <string name="no">Não</string>
+    <string name="yes">Sim</string>
+    <string name="customer_paid">O cliente pagou? Confirme o pagamento</string>
 
 </resources>
